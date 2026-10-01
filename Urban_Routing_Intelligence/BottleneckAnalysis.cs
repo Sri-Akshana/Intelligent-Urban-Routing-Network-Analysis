@@ -6,6 +6,12 @@ public class BottleneckAnalysis
 {
     public void AnalyseBottlenecks(Graph graph)
     {
+        if (graph.Nodes.Count == 0)
+        {
+            Console.WriteLine("The graph contains no nodes.");
+            return;
+        }
+
         Console.WriteLine();
         Console.WriteLine("Bottleneck / Critical Node Analysis");
         Console.WriteLine("------------------------------------");

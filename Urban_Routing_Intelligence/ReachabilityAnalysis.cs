@@ -9,6 +9,13 @@ public class ReachabilityAnalysis
         string startNode,
         double maximumTravelTime)
     {
+        if (maximumTravelTime < 0)
+        {
+            Console.WriteLine(
+                "Maximum travel time cannot be negative.");
+            return;
+        }
+
         if (!graph.Nodes.ContainsKey(startNode))
         {
             Console.WriteLine("Start node not found: " + startNode);
@@ -46,6 +53,18 @@ public class ReachabilityAnalysis
 
                 if (visited.Contains(neighbour))
                 {
+                    continue;
+                }
+
+                // Travel time must be valid for the calculation.
+                if (double.IsNaN(edge.TravelTimeMinutes) ||
+                    double.IsInfinity(edge.TravelTimeMinutes) ||
+                    edge.TravelTimeMinutes < 0)
+                {
+                    Console.WriteLine(
+                        "Invalid travel time detected on edge: " +
+                        edge.EdgeID);
+
                     continue;
                 }
 

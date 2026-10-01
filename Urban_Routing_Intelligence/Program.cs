@@ -79,6 +79,47 @@ class Program
                 edgesSheetName
             );
 
+        // -------------------------
+        // Check Loaded Graph
+        // -------------------------
+
+        if (graph.Nodes.Count == 0)
+        {
+            Console.WriteLine();
+            Console.WriteLine(
+                "No valid graph data was loaded.");
+            Console.WriteLine(
+                "The program cannot continue.");
+            Console.ReadLine();
+            return;
+        }
+
+        if (!graph.Nodes.ContainsKey("N1"))
+        {
+            Console.WriteLine();
+            Console.WriteLine(
+                "Required start node N1 was not found.");
+            Console.WriteLine(
+                "The program cannot continue.");
+            Console.ReadLine();
+            return;
+        }
+
+        if (!graph.Nodes.ContainsKey(endNode))
+        {
+            Console.WriteLine();
+            Console.WriteLine(
+                "Required end node " +
+                endNode +
+                " was not found.");
+
+            Console.WriteLine(
+                "The program cannot continue.");
+
+            Console.ReadLine();
+            return;
+        }
+
         Console.WriteLine(
             "Excel data loaded successfully.");
 

@@ -50,6 +50,18 @@ public class Dijkstra
                     continue;
                 }
 
+                // Dijkstra requires non-negative edge weights.
+                if (double.IsNaN(edge.TravelTimeMinutes) ||
+                    double.IsInfinity(edge.TravelTimeMinutes) ||
+                    edge.TravelTimeMinutes < 0)
+                {
+                    Console.WriteLine(
+                        "Invalid travel time detected on edge: " +
+                        edge.EdgeID);
+
+                    continue;
+                }
+
                 double newDistance =
                     distance[currentNode] + edge.TravelTimeMinutes;
 
@@ -63,7 +75,12 @@ public class Dijkstra
 
         if (distance[endNode] == double.MaxValue)
         {
-            Console.WriteLine("No route found from " + startNode + " to " + endNode);
+            Console.WriteLine(
+                "No route found from " +
+                startNode +
+                " to " +
+                endNode);
+
             return;
         }
 
@@ -75,8 +92,10 @@ public class Dijkstra
 
         Console.WriteLine("Start Node: " + startNode);
         Console.WriteLine("End Node: " + endNode);
-        Console.WriteLine("Total Travel Time: " +
-                          distance[endNode].ToString("F2") + " minutes");
+        Console.WriteLine(
+            "Total Travel Time: " +
+            distance[endNode].ToString("F2") +
+            " minutes");
 
         Console.WriteLine("Path:");
 

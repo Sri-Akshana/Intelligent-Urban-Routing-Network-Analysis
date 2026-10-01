@@ -10,6 +10,13 @@ public class ConstrainedRouting
         string endNode,
         double maximumTravelTime)
     {
+        if (maximumTravelTime < 0)
+        {
+            Console.WriteLine(
+                "Maximum travel time cannot be negative.");
+            return;
+        }
+
         if (!graph.Nodes.ContainsKey(startNode))
         {
             Console.WriteLine("Start node not found: " + startNode);
@@ -60,11 +67,23 @@ public class ConstrainedRouting
                     continue;
                 }
 
+                // Travel time must be valid for the routing calculation.
+                if (double.IsNaN(edge.TravelTimeMinutes) ||
+                    double.IsInfinity(edge.TravelTimeMinutes) ||
+                    edge.TravelTimeMinutes < 0)
+                {
+                    Console.WriteLine(
+                        "Invalid travel time detected on edge: " +
+                        edge.EdgeID);
+
+                    continue;
+                }
+
                 double newDistance =
                     distance[currentNode] +
                     edge.TravelTimeMinutes;
 
-                // Only accept routes within the time constraint
+                // Only accept routes within the time constraint.
                 if (newDistance <= maximumTravelTime &&
                     newDistance < distance[neighbour])
                 {
